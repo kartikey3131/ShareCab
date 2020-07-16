@@ -2,11 +2,13 @@ package com.example.sharecab;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,7 +32,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.listholder> {
     @Override
     public ListAdapter.listholder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         LayoutInflater inflater =LayoutInflater.from(context);
-        View view =inflater.inflate(R.layout.list,parent,false);
+        View view =inflater.inflate(R.layout.driver_data,parent,false);
         listholder l =new listholder(view);
         return l;
     }
@@ -41,7 +43,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.listholder> {
         holder.name.setText(data.get(position).getName());
 //        holder.contact.setText(data.get(position).getContact());
         holder.price.setText(data.get(position).getPrice());
-        holder.availability.setText(data.get(position).getAvailability());
+
+        String temp=data.get(position).getAvailability();
+        if(temp=="Available")
+        {
+            holder.availability.setText(temp);}
+        else{
+            holder.availability.setTextColor(Color.parseColor("#FF0000"));
+            holder.availability.setText(temp);
+        }
         holder.model.setText(data.get(position).getModel());
 
         holder.linearLayout.setOnClickListener(new View.OnClickListener() {
@@ -71,15 +81,15 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.listholder> {
         TextView model;
         TextView availability;
         TextView price;
-        LinearLayout linearLayout;
+        RelativeLayout linearLayout;
         public listholder(@NonNull View itemView) {
             super(itemView);
-            name =itemView.findViewById(R.id.Name);
+            name =itemView.findViewById(R.id.name);
 //            contact =itemView.findViewById(R.id.contact);
-            model =itemView.findViewById(R.id.model);
+            model =itemView.findViewById(R.id.vehModel);
             availability =itemView.findViewById(R.id.availability);
-            price =itemView.findViewById(R.id.price);
-            linearLayout =itemView.findViewById(R.id.linear_layout);
+            price =itemView.findViewById(R.id.textViewPrice);
+            linearLayout =itemView.findViewById(R.id.list_product);
         }
     }
 }
