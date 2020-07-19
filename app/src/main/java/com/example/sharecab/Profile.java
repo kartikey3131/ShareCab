@@ -28,7 +28,7 @@ public class Profile extends AppCompatActivity {
     private TextView rider_price;
     private TextView rider_status;
     String currentuser;
-    FirebaseAuth auth;
+    private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -53,19 +53,23 @@ public class Profile extends AppCompatActivity {
         Intent intent =getIntent();
         final String p =intent.getStringExtra("Type").toString();
         rider_name.setText(p);
+       // Toast.makeText(this, p, Toast.LENGTH_SHORT).show();
         if(p.equals("Drivers")){
             rider_status.setVisibility(View.VISIBLE);
             rider_model.setVisibility(View.VISIBLE);
             rider_number.setVisibility(View.VISIBLE);
             rider_price.setVisibility(View.VISIBLE);
         }
+        Toast.makeText(this, mAuth.getUid().toString(), Toast.LENGTH_SHORT).show();
         DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(p);
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(p.equals("Drivers")){
-                    if (snapshot.child("uid -1").exists()) {
-                        User2 u = snapshot.child(currentuser).getValue(User2.class);
+                    if (snapshot.child(mAuth.getUid()).exists()) {
+                        Toast.makeText(Profile.this, "70", Toast.LENGTH_SHORT).show();
+
+                        User2 u = snapshot.child(mAuth.getUid()).getValue(User2.class);
                         rider_name.setText(u.getName());
                         rider_contact.setText(u.getContact());
                         rider_price.setText(u.getPrice());
@@ -80,6 +84,8 @@ public class Profile extends AppCompatActivity {
                 }
                 else{
                     if(snapshot.child(currentuser).exists()) {
+
+                        Toast.makeText(Profile.this, "85", Toast.LENGTH_SHORT).show();
                         User1 u = snapshot.child(currentuser).getValue(User1.class);
                         rider_name.setText(u.getName());
                         rider_contact.setText(u.getContact());

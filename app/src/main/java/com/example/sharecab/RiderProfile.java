@@ -9,6 +9,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.Random;
+
 public class RiderProfile extends AppCompatActivity {
 
     private TextView rider_name;
@@ -17,6 +19,7 @@ public class RiderProfile extends AppCompatActivity {
     private TextView rider_number;
     private TextView rider_price;
     private Button book;
+    int random_otp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +47,15 @@ public class RiderProfile extends AppCompatActivity {
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                Random random= new Random();
+                random_otp=random.nextInt(90000)+10000;
+                //mobile_no=mobile.getText().toString().trim();
+                //random_otp = (int) (Math.random()*90000)+10000;
+                Toast.makeText(RiderProfile.this, String.valueOf(random_otp), Toast.LENGTH_SHORT).show();
+//                Intent i=new Intent(RiderProfile.this,otp_verification.class);
+//                //i.putExtra("mobile", mobile_no);
+//                i.putExtra("otp",String.valueOf(random_otp));
+//                startActivity(i);
                 if(finalS.equals("Unavailable")){
                     Toast.makeText(RiderProfile.this, "Taxi Is unavailable", Toast.LENGTH_SHORT).show();
                 }

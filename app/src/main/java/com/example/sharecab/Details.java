@@ -58,17 +58,22 @@ public class Details extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String id = databaseReference.push().getKey();
+                                //String id = databaseReference.push().getKey();
                                 User1 u = new User1(nam,con,e);
-                                databaseReference.child(id).setValue(u);
+                                //Toast.makeText(Details.this, id+"\n"+auth.getUid(), Toast.LENGTH_SHORT).show();
+
+                                databaseReference.child(auth.getUid()).setValue(u);
                                 FirebaseFirestore.setLoggingEnabled(true);
                                 Intent intent = new Intent(Details.this, MainActivity.class);
                                 intent.putExtra("name",email_s1);
                                 intent.putExtra("Type",e);
                                 startActivity(intent);
-                            } else {
-                                String s=task.getException().toString();
+                            } else {String s=task.getException().toString();
+                                Intent intent = new Intent(Details.this,SignupActivity.class);
+
                                 Toast.makeText(Details.this, "Registration failed/Email Id is already registered", Toast.LENGTH_SHORT).show();
+                                progress.cancel();
+                                startActivity(intent);
                             }
                         }
                     });

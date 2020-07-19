@@ -45,7 +45,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.listholder> {
         holder.price.setText(data.get(position).getPrice());
 
         String temp=data.get(position).getAvailability();
-        if(temp=="Available")
+        if(temp.equals("Available"))
         {
             holder.availability.setText(temp);}
         else{

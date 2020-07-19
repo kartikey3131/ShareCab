@@ -59,25 +59,30 @@ public class Rider extends AppCompatActivity {
                     progress.show();
                     Intent intent1 =getIntent();
                     final String email_s2 = intent1.getStringExtra("email").trim();
-                    String password_s2 =intent1.getStringExtra("password").trim();
+                    String password_s2 =intent1.getStringExtra("password");
                     final String nam1 =intent1.getStringExtra("name").trim();
                     final String con1 =intent1.getStringExtra("contact").trim();
                     auth1.createUserWithEmailAndPassword(email_s2, password_s2).addOnCompleteListener(Rider.this, new OnCompleteListener<AuthResult>() {
                         @Override
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
-                                String id1 = databaseReference1.push().getKey();
+                                //String id1 = databaseReference1.push().getKey();
                                 String e="Driver";
                                 String a ="Available";
+                                //Toast.makeText(Rider.this, id1+"\n"+auth1.getUid(), Toast.LENGTH_SHORT).show();
                                 User2 u =new User2(nam1,con1,c,m,p,e,a);
-                                databaseReference1.child(id1).setValue(u);
+                                databaseReference1.child(auth1.getUid()).setValue(u);
                                 Intent intent = new Intent(Rider.this, MainActivity.class);
                                 intent.putExtra("name",email_s2);
                                 intent.putExtra("Type",e);
                                 startActivity(intent);
                             } else {
                                 String s=task.getException().toString();
+                                Intent intent = new Intent(Rider.this,SignupActivity.class);
+
                                 Toast.makeText(Rider.this, "Registration failed/Email Id is already registered", Toast.LENGTH_SHORT).show();
+                                progress.cancel();
+                                startActivity(intent);
                             }
                         }
                     });
