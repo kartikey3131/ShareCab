@@ -4,15 +4,24 @@ public class User1 {
     String name;
     String contact;
     String type;
-
+    String uid;
     public User1(){
 
     }
 
-    public User1(String name, String contact,String type) {
+    public User1(String name, String contact,String type,String uid) {
         this.name = name;
         this.contact = contact;
         this.type =type;
+        this.uid=uid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {

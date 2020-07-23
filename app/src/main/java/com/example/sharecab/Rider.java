@@ -70,7 +70,7 @@ public class Rider extends AppCompatActivity {
                                 String e="Driver";
                                 String a ="Available";
                                 //Toast.makeText(Rider.this, id1+"\n"+auth1.getUid(), Toast.LENGTH_SHORT).show();
-                                User2 u =new User2(nam1,con1,c,m,p,e,a);
+                                User2 u =new User2(nam1,con1,c,m,p,e,a,auth1.getUid());
                                 databaseReference1.child(auth1.getUid()).setValue(u);
                                 Intent intent = new Intent(Rider.this, MainActivity.class);
                                 intent.putExtra("name",email_s2);

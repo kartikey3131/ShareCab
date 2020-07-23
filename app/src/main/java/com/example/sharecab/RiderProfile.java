@@ -20,6 +20,7 @@ public class RiderProfile extends AppCompatActivity {
     private TextView rider_price;
     private Button book;
     int random_otp;
+    String Uid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,23 +45,22 @@ public class RiderProfile extends AppCompatActivity {
         rider_price.setText("Price : "+s);
         s=intent.getStringExtra("Status").toString();
         final String finalS = s;
+        Uid=intent.getStringExtra("Uid").toString();
         book.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Random random= new Random();
-                random_otp=random.nextInt(90000)+10000;
-                //mobile_no=mobile.getText().toString().trim();
-                //random_otp = (int) (Math.random()*90000)+10000;
-                Toast.makeText(RiderProfile.this, String.valueOf(random_otp), Toast.LENGTH_SHORT).show();
-//                Intent i=new Intent(RiderProfile.this,otp_verification.class);
-//                //i.putExtra("mobile", mobile_no);
-//                i.putExtra("otp",String.valueOf(random_otp));
-//                startActivity(i);
+
                 if(finalS.equals("Unavailable")){
                     Toast.makeText(RiderProfile.this, "Taxi Is unavailable", Toast.LENGTH_SHORT).show();
                 }
                 else{
-                    Toast.makeText(RiderProfile.this, "Taxi Is unavailable", Toast.LENGTH_SHORT).show();
+                    Random random= new Random();
+                    random_otp=random.nextInt(90000)+10000;
+                    Toast.makeText(RiderProfile.this,Uid, Toast.LENGTH_SHORT).show();
+                    Intent i=new Intent(RiderProfile.this,bookedcabs.class);
+                    i.putExtra("otp",String.valueOf(random_otp));
+                    i.putExtra("Uid",Uid);
+                    startActivity(i);
                 }
             }
         });

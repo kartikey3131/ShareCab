@@ -64,6 +64,7 @@ public class ListAdapter extends RecyclerView.Adapter<ListAdapter.listholder> {
                 intent.putExtra("Number",u.getCarNumber());
                 intent.putExtra("Price",u.getPrice());
                 intent.putExtra("Status",u.getAvailability());
+                intent.putExtra("Uid",u.getUid());
                 context.startActivity(intent);
             }
         });

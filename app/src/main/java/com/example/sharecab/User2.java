@@ -8,11 +8,12 @@ public class User2 {
     String price;
     String type;
     String availability;
+    String uid;
     public User2(){
 
     }
 
-    public User2(String name, String contact, String carNumber, String model, String price,String type,String availability) {
+    public User2(String name, String contact, String carNumber, String model, String price,String type,String availability,String uid) {
         this.name = name;
         this.contact = contact;
         this.carNumber = carNumber;
@@ -20,6 +21,15 @@ public class User2 {
         this.price = price;
         this.type =type;
         this.availability = availability;
+        this.uid=uid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
     }
 
     public String getName() {

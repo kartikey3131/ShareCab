@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ public class Profile extends AppCompatActivity {
     private TextView rider_number;
     private TextView rider_price;
     private TextView rider_status;
+    private Switch status;
     String currentuser;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
@@ -46,6 +49,7 @@ public class Profile extends AppCompatActivity {
         rider_number =findViewById(R.id.rider_number);
         rider_price =findViewById(R.id.rider_price);
         rider_status =findViewById(R.id.rider_status);
+        status=findViewById(R.id.status);
         rider_status.setVisibility(View.INVISIBLE);
         rider_model.setVisibility(View.INVISIBLE);
         rider_number.setVisibility(View.INVISIBLE);
@@ -59,15 +63,30 @@ public class Profile extends AppCompatActivity {
             rider_model.setVisibility(View.VISIBLE);
             rider_number.setVisibility(View.VISIBLE);
             rider_price.setVisibility(View.VISIBLE);
+            status.setVisibility(View.VISIBLE);
+            status.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    DatabaseReference ref = FirebaseDatabase.getInstance().getReference("Drivers");
+                    if (isChecked) {
+                        //Toast.makeText(Profile.this, mAuth.getUid()+" :"+"Un Available", Toast.LENGTH_SHORT).show();
+                        ref.child(mAuth.getUid()).child("availability").setValue("Available");
+
+                    } else {
+                        ref.child(mAuth.getUid()).child("availability").setValue("Un Available");
+                        //Toast.makeText(Profile.this, mAuth.getUid()+" :"+"Available", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            });
+
         }
-        Toast.makeText(this, mAuth.getUid().toString(), Toast.LENGTH_SHORT).show();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(p);
+        //Toast.makeText(this, mAuth.getUid().toString(), Toast.LENGTH_SHORT).show();
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Drivers");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 if(p.equals("Drivers")){
                     if (snapshot.child(mAuth.getUid()).exists()) {
-                        Toast.makeText(Profile.this, "70", Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(Profile.this, "70", Toast.LENGTH_SHORT).show();
 
                         User2 u = snapshot.child(mAuth.getUid()).getValue(User2.class);
                         rider_name.setText(u.getName());
@@ -76,7 +95,17 @@ public class Profile extends AppCompatActivity {
                         rider_number.setText(u.getCarNumber());
                         rider_model.setText(u.getModel());
                         rider_status.setText(u.getAvailability());
-                    }
+
+                        if(u.getAvailability().trim().equals("Available")){
+                           // Toast.makeText(Profile.this, "100", Toast.LENGTH_SHORT).show();
+                            status.setChecked(true);
+                        }
+                        else{
+                            //Toast.makeText(Profile.this, "104", Toast.LENGTH_SHORT).show();
+                            status.setChecked(false);
+                        }
+
+                   }
                     else{
                         Toast.makeText(Profile.this, currentuser, Toast.LENGTH_SHORT).show();
                     }

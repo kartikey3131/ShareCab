@@ -59,7 +59,7 @@ public class Details extends AppCompatActivity {
                         public void onComplete(@NonNull Task<AuthResult> task) {
                             if (task.isSuccessful()) {
                                 //String id = databaseReference.push().getKey();
-                                User1 u = new User1(nam,con,e);
+                                User1 u = new User1(nam,con,e,auth.getUid());
                                 //Toast.makeText(Details.this, id+"\n"+auth.getUid(), Toast.LENGTH_SHORT).show();
 
                                 databaseReference.child(auth.getUid()).setValue(u);
