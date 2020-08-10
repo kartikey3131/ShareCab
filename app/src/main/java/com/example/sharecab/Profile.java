@@ -30,6 +30,7 @@ public class Profile extends AppCompatActivity {
     private TextView rider_price;
     private TextView rider_status;
     private Switch status;
+    String search;
     String currentuser;
     private FirebaseAuth mAuth = FirebaseAuth.getInstance();
     @Override
@@ -80,7 +81,7 @@ public class Profile extends AppCompatActivity {
 
         }
         //Toast.makeText(this, mAuth.getUid().toString(), Toast.LENGTH_SHORT).show();
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference(p);
+        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReference("Drivers");
         databaseReference.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -112,11 +113,10 @@ public class Profile extends AppCompatActivity {
 
                 }
                 else{
-                    //Toast.makeText(Profile.this, "115"+p, Toast.LENGTH_SHORT).show();
+                    if(snapshot.child(currentuser).exists()) {
 
-                    if(snapshot.child(mAuth.getUid()).exists()) {
-                        //Toast.makeText(Profile.this, "118", Toast.LENGTH_SHORT).show();
-                        User1 u = snapshot.child(mAuth.getUid()).getValue(User1.class);
+                        Toast.makeText(Profile.this, "85", Toast.LENGTH_SHORT).show();
+                        User1 u = snapshot.child(currentuser).getValue(User1.class);
                         rider_name.setText(u.getName());
                         rider_contact.setText(u.getContact());
                     }
